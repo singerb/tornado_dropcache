@@ -1,3 +1,6 @@
+README
+------
+
 ========
 mixin.py
 ========
@@ -30,6 +33,7 @@ Example Usage
 =============
 
 ::
+
     class MainHandler(DropboxUserHandler, DropboxAPIMixin):
         @tornado.web.asynchronous
         @tornado.gen.engine
