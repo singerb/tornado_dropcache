@@ -265,7 +265,7 @@ class DropboxAPIMixin(DropboxMixin):
             callback(self._files_from_metadata(user["folder_metadata"]))
 
     def _files_from_metadata(self, metadata):
-        logger.debug('metadata contents %s', (metadata["contents"]))
+        logger.debug('metadata contents %s', metadata["contents"])
         return [content["path"].replace(self._get_folder_path(), "", 1).lstrip("/") for content in metadata["contents"]]
 
     @tornado.web.authenticated
@@ -361,7 +361,7 @@ class DropboxAPIMixin(DropboxMixin):
 
         f = cache.get_file(uid, file_name)
 
-        logger.debug("uploading new %s file: '%s'", (file_name, data))
+        logger.debug("uploading new %s file: '%s'", file_name, data)
         if f:
             logger.debug("previous rev:")
             logger.debug(f["file_metadata"]["rev"])
@@ -411,7 +411,7 @@ class DropboxAPIMixin(DropboxMixin):
         cache = self._get_cache()
         uid = self.current_user["uid"]
 
-        logger.debug("moving %s to %s", (file_name, new_file_name))
+        logger.debug("moving %s to %s", file_name, new_file_name)
 
         response = yield tornado.gen.Task(self.dropbox_request,
                 "api", "/1/fileops/move",
@@ -439,7 +439,7 @@ class DropboxAPIMixin(DropboxMixin):
         cache = self._get_cache()
         uid = self.current_user["uid"]
 
-        logger.debug("deleting %s", (file_name))
+        logger.debug("deleting %s", file_name)
 
         response = yield tornado.gen.Task(self.dropbox_request,
                 "api", "/1/fileops/delete",

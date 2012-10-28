@@ -322,14 +322,14 @@ class DictCache(Cache):
     def update_file(self, uid, file_name, timestamp, metadata, data):
         if self._key(uid, file_name) not in self._data_dict:
             return
-        self._data_dict[self._key(uid, file_name)]['timestamp'] = timestamp
-        self._data_dict[self._key(uid, file_name)]['metadata'] = json.loads(metadata)
-        self._data_dict[self._key(uid, file_name)]['data'] = data
+        self._data_dict[self._key(uid, file_name)]['file_metadata_ts'] = timestamp
+        self._data_dict[self._key(uid, file_name)]['file_metadata'] = json.loads(metadata)
+        self._data_dict[self._key(uid, file_name)]['file_data'] = data
 
     def update_file_timestamp(self, uid, file_name, timestamp):
         if self._key(uid, file_name) not in self._data_dict:
             return
-        self._data_dict[self._key(uid, file_name)]['timestamp'] = timestamp
+        self._data_dict[self._key(uid, file_name)]['file_metadata_ts'] = timestamp
 
     def remove_file(self, uid, file_name):
         if self._key(uid, file_name) not in self._data_dict:
