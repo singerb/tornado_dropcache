@@ -106,6 +106,13 @@ Python (tested on 2.7.1).
 Cache implementations other than the basic ones here may have additional dependencies for their
 specific backend; see each implementation for details.
 
+Usage
+=====
+
+Note that if you want to run multiple Tornado processes (in the usual nginx+Tornado manner) then
+you need to use a Cache implementation that all processes can share. Currently no implementations
+meet this criteria, but the planned memcached and CouchDB implementations will.
+
 Classes
 =======
 
