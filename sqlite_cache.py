@@ -50,7 +50,7 @@ from cache import Cache
 class SqliteCache(Cache):
     """A Cache implementation that uses the sqlite3 package and bindings."""
 
-    def __init__(self, folder_name, timeout=datetime.timedelta(seconds=30), cache_file_name='cache.db'):
+    def __init__(self, folder_name, timeout=datetime.timedelta(seconds=60), cache_file_name='cache.db'):
         """Construct an SqliteCache.
 
         folder_name - the Dropbox folder name this app is using; can be empty for sandbox access

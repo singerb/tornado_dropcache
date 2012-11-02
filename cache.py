@@ -273,7 +273,7 @@ class EmptyCache(Cache):
 class DictCache(Cache):
     """A Cache implementation that stores data in an in memory dictionary."""
 
-    def __init__(self, folder_name, timeout=datetime.timedelta(seconds=30)):
+    def __init__(self, folder_name, timeout=datetime.timedelta(seconds=60)):
         """Construct a DictCache with a folder name.
 
         The folder name is the path to this app's files, and could be the empty string
