@@ -118,6 +118,7 @@ import tornado.gen
 
 from async_dropbox import DropboxMixin
 from tornado.escape import utf8
+from urllib import quote
 
 logger = logging.getLogger(__name__)
 
@@ -232,12 +233,12 @@ class DropboxAPIMixin(DropboxMixin):
             response = None
             if "hash" in user["folder_metadata"]:
                 response = yield tornado.gen.Task(self.dropbox_request,
-                        "api", "/1/metadata/%s/%s" % (self._get_api_type(), self._get_folder_path()),
+                        "api", "/1/metadata/%s/%s" % (self._get_api_type(), quote(self._get_folder_path())),
                         access_token=self._get_access_token(),
                         list="true", hash=user["folder_metadata"]["hash"])
             else:
                 response = yield tornado.gen.Task(self.dropbox_request,
-                        "api", "/1/metadata/%s/%s" % (self._get_api_type(), self._get_folder_path()),
+                        "api", "/1/metadata/%s/%s" % (self._get_api_type(), quote(self._get_folder_path())),
                         access_token=self._get_access_token(),
                         list="true")
 
@@ -286,7 +287,7 @@ class DropboxAPIMixin(DropboxMixin):
         if not f:
             logger.debug("retrieving file for first time")
             response = yield tornado.gen.Task(self.dropbox_request,
-                    "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                    "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                     access_token=self._get_access_token())
 
             try:
@@ -309,7 +310,7 @@ class DropboxAPIMixin(DropboxMixin):
             if datetime.datetime.now() - f["file_metadata_ts"] > cache.timeout:
                 logger.debug("requesting new metadata")
                 response = yield tornado.gen.Task(self.dropbox_request,
-                        "api", "/1/metadata/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                        "api", "/1/metadata/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                         access_token=self._get_access_token(),
                         list="false")
 
@@ -330,7 +331,7 @@ class DropboxAPIMixin(DropboxMixin):
                 else:
                     logger.debug("retrieving updated copy of file")
                     response = yield tornado.gen.Task(self.dropbox_request,
-                            "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                            "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                             access_token=self._get_access_token())
 
                     response.rethrow()
@@ -369,12 +370,12 @@ class DropboxAPIMixin(DropboxMixin):
         response = None
         if f:
             response = yield tornado.gen.Task(self.dropbox_request,
-                    "api-content", "/1/files_put/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                    "api-content", "/1/files_put/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                     access_token=self._get_access_token(),
                     put_body=data, parent_rev=f["file_metadata"]["rev"])
         else:
             response = yield tornado.gen.Task(self.dropbox_request,
-                    "api-content", "/1/files_put/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                    "api-content", "/1/files_put/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                     access_token=self._get_access_token(),
                     put_body=data)
 
@@ -382,7 +383,7 @@ class DropboxAPIMixin(DropboxMixin):
 
         if not f:
             response = yield tornado.gen.Task(self.dropbox_request,
-                    "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), self._get_folder_path(), file_name),
+                    "api-content", "/1/files/%s/%s/%s" % (self._get_api_type(), quote(self._get_folder_path()), quote(file_name)),
                     access_token=self._get_access_token())
 
             response.rethrow()
