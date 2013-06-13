@@ -1,6 +1,8 @@
 README
 ------
 
+Now hosted on bitbucket: https://bitbucket.org/singerb/tornado_dropcache.
+
 ========
 mixin.py
 ========
